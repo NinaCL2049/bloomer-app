@@ -1,0 +1,1 @@
+// first page the user sees. welcome message + login button. this is the only page that does not have a menu bar at the top showing main menu / log out.
