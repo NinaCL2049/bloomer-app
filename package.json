@@ -3,16 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mui/icons-material": "^6.1.6",
+    "@mui/toolpad": "^0.1.51",
+    "@mui/x-charts": "^7.22.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "cookie": "^1.0.1",
+    "crypto-browserify": "^3.12.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-redux": "^9.1.2",
     "react-router": "^6.27.0",
     "react-router-dom": "^6.27.0",
     "react-scripts": "5.0.1",
+    "react-timer-hook": "^3.0.8",
     "redux": "^5.0.1",
     "redux-thunk": "^3.1.0",
     "web-vitals": "^2.1.4"
@@ -40,5 +45,22 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "resolve": {
+    "fallback": {
+      "fs": false,
+      "tls": false,
+      "net": false,
+      "path": false,
+      "zlib": false,
+      "http": false,
+      "https": false,
+      "stream": false,
+      "crypto": false,
+      "querystring": false,
+      "url": false,
+      "buffer": false,
+      "util": false
+    }
   }
 }
