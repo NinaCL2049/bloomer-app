@@ -10,6 +10,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import MyTimer from './Session';
+import './styles.css';
 
 function ElevationScroll(props) {
   const { children, window } = props;

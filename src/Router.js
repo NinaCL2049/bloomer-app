@@ -1,33 +1,36 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router";
-// import parse from "cookie";
+import { parse } from 'cookie';
 import Home from "./components/Home";
 import Signup from "./components/Signup";
 import Session from "./components/Session";
-// import { BasicLineChart, ColorToggleButton } from "./components/History";
 import Menu from "./components/Menu";
 import About from "./components/About";
 import History from "./components/History";
 import { MyTimer, DiscreteSlider } from "./components/Session";
-// import Navigation from "./components/Navigation";
-// import Schedule from "./components/Schedule";
-
-const checkAuth = () => true;
-
-// const ProtectedRoute = (props) => {
-//   return checkAuth() === true ? <p>This is the placeholder checkauth is true text in router.js.</p> : <p>placeholder checkauth is false text in router.js.</p>
-// }
 
 const ProtectedRoute = ({ component: Component }) => {
-  return checkAuth() ? <Component /> : <Navigate to="/login" />;
+  const isAuthenticated = checkAuth();
+  console.log('Auth check result:', isAuthenticated);
+  return isAuthenticated ? <Component /> : <Navigate to="/login" />;
 };
 
-// const checkAuth = () => {
-//   const cookies = cookie.parse(document.cookie);
-//   return cookies["loggedIn"] ? true : false;
-// };
+const checkAuth = () => {
+  try {
+    const cookies = parse(document.cookie);
+    console.log('Current cookies:', cookies);
+    return cookies["loggedIn"] === "true";
+  } catch (error) {
+    console.error('Cookie parsing error:', error);
+    return false;
+  }
+};
 
-// all the routes should be protected except to the login.
+const RootRedirect = () => {
+  const isAuthenticated = checkAuth();
+  console.log('Root redirect auth check:', isAuthenticated);
+  return isAuthenticated ? <Navigate to="/menu" /> : <Navigate to="/login" />;
+};
 
 const SessionWrapper = () => {
   return (
@@ -41,7 +44,9 @@ const SessionWrapper = () => {
 const Router = () => {
   return (
     <Routes>
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<RootRedirect />} />
+      <Route path="/login" element={<Home />} />
+      <Route path="/menu" element={<ProtectedRoute component={Menu} />} />
       <Route path="/signup" element={<ProtectedRoute component={Signup} />} />
       <Route
         path="/session"
@@ -49,7 +54,6 @@ const Router = () => {
       />
       <Route path="/history" element={<ProtectedRoute component={History} />} />
       <Route path="/about" element={<ProtectedRoute component={About} />} />
-      <Route path="/menu" element={<ProtectedRoute component={Menu} />} />
     </Routes>
   );
 };

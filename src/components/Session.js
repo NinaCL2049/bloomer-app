@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
 import Typography from "@mui/material/Typography";
 import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
 
 function MyTimer({ expiryTimestamp }) {
   const [selectedMinutes, setSelectedMinutes] = React.useState("");
@@ -84,6 +85,8 @@ function MyTimer({ expiryTimestamp }) {
 
 function DiscreteSlider() {
   const [notes, setNotes] = React.useState('');
+  const [painLevel, setPainLevel] = React.useState(3);
+  const [depth, setDepth] = React.useState(3);
 
   const painMarks = [
     { value: 1 },
@@ -104,9 +107,38 @@ function DiscreteSlider() {
     }
   };
 
-  const handleFinish = () => {
-    // TODO: Implement data saving logic here
-    console.log('Saving session data...');
+  const handleFinish = async () => {
+    try {
+      const sessionData = {
+        user_id: 1,
+        pain: painLevel,
+        depth: depth,
+        notes: notes
+      };
+
+      console.log('Sending data:', sessionData);
+
+      const response = await fetch('http://localhost:4000/sessions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(sessionData)
+      });
+
+      const result = await response.json();
+      console.log('Success:', result);
+
+      // Clear form after successful save
+      setNotes('');
+      setPainLevel(3);
+      setDepth(3);
+      
+      alert('Session saved successfully!');
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Failed to save session data');
+    }
   };
 
   return (
@@ -115,7 +147,8 @@ function DiscreteSlider() {
         <Typography gutterBottom>Pain Level</Typography>
         <Slider
           aria-label="Pain"
-          defaultValue={3}
+          value={painLevel}
+          onChange={(e, newValue) => setPainLevel(newValue)}
           valueLabelDisplay="auto"
           valueLabelFormat={getPainLabel}
           step={1}
@@ -127,7 +160,8 @@ function DiscreteSlider() {
         <Typography gutterBottom sx={{ mt: 4 }}>Depth</Typography>
         <Slider
           aria-label="Depth"
-          defaultValue={3}
+          value={depth}
+          onChange={(e, newValue) => setDepth(newValue)}
           valueLabelDisplay="auto"
           step={1}
           marks
@@ -146,20 +180,13 @@ function DiscreteSlider() {
         />
         
         <Box sx={{ mt: 2 }}>
-          <button 
+          <Button 
+            variant="contained" 
             onClick={handleFinish}
-            style={{
-              width: '100%',
-              padding: '10px',
-              backgroundColor: '#1976d2',
-              color: 'white',
-              border: 'none',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
+            style={{ marginTop: '20px' }}
           >
             Finish and Save Data
-          </button>
+          </Button>
         </Box>
       </Box>
     </div>

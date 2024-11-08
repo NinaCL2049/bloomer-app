@@ -31,11 +31,38 @@ const Menu = () => {
     });
   };
 
-  const handleSaveSchedule = () => {
-    // Here you would implement the logic to save the schedule
-    // and set up notifications
-    console.log('Schedule Time:', scheduleTime);
-    console.log('Selected Days:', selectedDays);
+  const handleSaveSchedule = async () => {
+    try {
+      // Convert selectedDays object to a JSON string
+      const daysJSON = JSON.stringify(selectedDays);
+      
+      const payload = {
+        schedules_user_id: 1,
+        reminder_time: scheduleTime,
+        days: daysJSON,
+        timer: 0
+      };
+      
+      console.log('Sending payload:', payload); // Debug log
+      
+      const response = await fetch('http://localhost:4000/schedules', { // Add full URL
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to save schedule: ${errorText}`);
+      }
+
+      const data = await response.json();
+      console.log('Schedule saved successfully:', data);
+    } catch (error) {
+      console.error('Error saving schedule:', error);
+    }
   };
 
   return (

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container } from "@mui/material";
-import cookie from "cookie";
+
 import { serialize } from "cookie";
 
 const Home = () => {
@@ -22,14 +22,39 @@ const Home = () => {
     });
   };
 
-  const login = (e) => {
+  const login = async (e) => {
     e.preventDefault();
-    document.cookie = serialize("loggedIn", "true", { maxAge: 1000 * 60 });
-    // document.cookie = "loggedIn=true;max-age=5"
-    // set cookie here
-    // set loggedIn = true and max-age = 60*1000 (one minute)
-
-    navigate("/");
+    
+    try {
+      const response = await fetch('http://localhost:4000/api/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        credentials: 'include',
+        body: JSON.stringify({
+          username: state.username,
+          password: state.password,
+        }),
+      });
+  
+      const data = await response.json();
+  
+      if (data.success) {
+        document.cookie = serialize("loggedIn", "true", {
+          maxAge: 60 * 60 * 1000, // 1 hour
+          path: '/',
+          sameSite: 'strict'
+        });
+        localStorage.setItem('userId', data.user.id);
+        navigate("/menu");
+      } else {
+        alert("Invalid username or password");
+      }
+    } catch (error) {
+      console.error('Login error:', error);
+      alert("An error occurred during login");
+    }
   };
 
   return (
@@ -68,20 +93,3 @@ const Home = () => {
 
 export default Home;
 
-// import React from 'react';
-// import { Link } from 'react-router-dom';
-// import { Card, CardContent, CardActions, Divider } from '@mui/material';
-
-// const Home = () => {
-//     return (
-//         <Card>
-//             <CardContent>
-//                 <h1>this is the home.js component</h1>
-//             </CardContent>
-//         </Card>
-//     );
-// };
-
-// export default Home;
-
-// first page the user sees. welcome message + login button. this is the only page that does not have a menu bar at the top showing main menu / log out.

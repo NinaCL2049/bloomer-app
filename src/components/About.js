@@ -63,22 +63,21 @@ import { Container, Divider, Switch, Card, CardContent } from "@mui/material";
 
 const About = () => {
     return (
-        // <Card>
-        //     <CardContent>
-        //         <h1>this is the about.js component</h1>
-        //     </CardContent>
-        // </Card>
         <Container maxWidth="sm">
             <h1>About Bloomer</h1>
-<p>Welcome to Bloomer! Bloomer is your dilation assistant app. It will help you…
+            <p>Welcome to Bloomer! Bloomer is your dilation assistant app.</p>
+            
+            <p>It will help you:</p>
+            
+            <p>Set a schedule to remind you when to dilate</p>
+            
+            <p>Log the details of your dilation sessions: record pain levels, depth, notes on any other observations or information you want to track</p>
+            
+            <p>Review your dilation history for details on pain, depth, and other observations</p>
+            
+            <p>Ensure compliance with your dilation schedule by recording when you actually DO dilate, helping you set a schedule you'll comply with better!</p>
 
-Set a schedule to remind you when to dilate
-
-Log the details of your dilation sessions: record pain levels, depth, notes on any other observations or information you want to keep track of.
-
-Review your dilation history to track details on pain, depth, and other observations you have.
-
-Ensure compliance with your dilation schedule by recording when you actually DO dilate, helping you set a schedule you'll comply with better!</p>
+            <p>Communicate better with your medical providers</p>
         </Container>
     );
 };
