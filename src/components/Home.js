@@ -26,7 +26,7 @@ const Home = () => {
     e.preventDefault();
     
     try {
-      const response = await fetch('http://localhost:4000/api/login', {
+      const response = await fetch('http://bloomer-backend-1vv4iyuw0-ninas-projects-98ec6a1b.vercel.app/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

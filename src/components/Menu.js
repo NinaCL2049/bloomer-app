@@ -45,7 +45,7 @@ const Menu = () => {
       
       console.log('Sending payload:', payload); // Debug log
       
-      const response = await fetch('http://localhost:4000/schedules', { // Add full URL
+      const response = await fetch('http://bloomer-backend-1vv4iyuw0-ninas-projects-98ec6a1b.vercel.app/schedules', { // Add full URL
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

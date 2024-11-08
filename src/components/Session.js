@@ -118,7 +118,7 @@ function DiscreteSlider() {
 
       console.log('Sending data:', sessionData);
 
-      const response = await fetch('http://localhost:4000/sessions', {
+      const response = await fetch('http://bloomer-backend-1vv4iyuw0-ninas-projects-98ec6a1b.vercel.app/sessions', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

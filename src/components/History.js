@@ -13,7 +13,7 @@ export default function History() {
     const fetchData = async () => {
       try {
         const userId = 1;
-        const response = await axios.get(`http://localhost:4000/sessions/${userId}`);
+        const response = await axios.get(`http://bloomer-backend-1vv4iyuw0-ninas-projects-98ec6a1b.vercel.app/sessions/${userId}`);
         
         const sortedData = response.data.sort((a, b) => 
           new Date(a.finish) - new Date(b.finish)
